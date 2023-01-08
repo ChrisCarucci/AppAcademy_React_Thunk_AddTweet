@@ -24,7 +24,6 @@ export const getAllTweets = () => async (dispatch) => {
 
 // add tweet - regular action creator
 const addTweet = tweet => {
-  console.log("Tweet: ", tweet)
   console.log("AddTweet Passed Tweet: ", tweet)
   return {
     type: ADD_TWEET,
@@ -43,23 +42,28 @@ export const addNewTweet = (req) => async (dispatch) => {
   })
   dispatch(addTweet(req))
   console.log("Req: ", req)
-}
+  console.log("Tweet: ", tweet)
+};
 
-// state object
-const initialState = {};
+
 
 // reducer
-const tweetsReducer = (state = initialState, action) => {
-  const newState = {};
+const tweetsReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_ALL_TWEETS: {
+      const newState = {};
       action.tweets.forEach((tweet) => (newState[tweet.id] = tweet));
       return newState;
     }
     case ADD_TWEET: {
-      const currId = state.length
-      newState[currId] = JSON.stringify(action.tweet);
-      return {...state, newState};
+      const currId = 4
+      const tweet = action.tweet
+      const newState = {
+        id: currId,
+        ...tweet
+      };
+      console.log("STATE: ", state)
+      return {...state, 4 : newState};
     }
     default:
       return state;

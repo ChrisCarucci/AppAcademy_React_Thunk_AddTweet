@@ -10,12 +10,18 @@ const CreateTweet = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+
+    let current = new Date();
+    let cDate = current.getFullYear() + '-' + (current.getMonth() + 1) + '-' + current.getDate();
+    let cTime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
+    let dateTime = cDate + ' ' + cTime;
+
     if (message) {
       console.log(message)
       const newTweet = {
         message: message,
-        createdAt: new Date().toDateString + ' ' + new Date().toTimeString,
-        updateAt: new Date().toDateString + ' ' + new Date().toTimeString
+        createdAt: dateTime,
+        updatedAt: dateTime
       };
 
       dispatch(addNewTweet(newTweet));
