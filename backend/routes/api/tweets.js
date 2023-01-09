@@ -14,13 +14,10 @@ router.get(
   })
 );
 
-router.post(
-  '/',
-  (req, res) => {
-    const tweet = req.body;
-    res.json(tweet);
-  }
-);
+router.post('/', asyncHandler(async (req, res) => {
+  const tweet = await Tweet.create(req.body);
+  res.json(tweet);
+}));
 
 
 module.exports = router;

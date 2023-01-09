@@ -5,7 +5,7 @@ import { getAllTweets } from './store/tweet';
 const TweetList = () => {
   const dispatch = useDispatch();
   const tweetList = useSelector((state) => Object.values(state.tweet));
-  console.log(tweetList);
+  console.log("Current State of TweetList: ", tweetList)
 
   useEffect(() => {
     dispatch(getAllTweets());

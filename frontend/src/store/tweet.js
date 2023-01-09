@@ -23,8 +23,8 @@ export const getAllTweets = () => async (dispatch) => {
 };
 
 // add tweet - regular action creator
-const addTweet = tweet => {
-  console.log("AddTweet Passed Tweet: ", tweet)
+const addTweet = (tweet) => {
+  //console.log("AddTweet Passed Tweet: ", tweet)
   return {
     type: ADD_TWEET,
     tweet
@@ -32,39 +32,32 @@ const addTweet = tweet => {
 };
 
 // add tweet - thunk action creator
-export const addNewTweet = (req) => async (dispatch) => {
-  const tweet = await fetch('/api/tweets', {
+export const addNewTweet = (tweet) => async (dispatch) => {
+  const response = await fetch('/api/tweets', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(req)
+    body: JSON.stringify(tweet)
   })
-  dispatch(addTweet(req))
-  console.log("Req: ", req)
-  console.log("Tweet: ", tweet)
+  const newTweet = await response.json();
+  console.log("New Tweet: ", newTweet)
+  console.log("Payload: ", tweet)
+  dispatch(addTweet(newTweet))
 };
 
-
+const preloadedState = {}
 
 // reducer
-const tweetsReducer = (state = {}, action) => {
+const tweetsReducer = (state = preloadedState, action) => {
   switch (action.type) {
     case GET_ALL_TWEETS: {
       const newState = {};
       action.tweets.forEach((tweet) => (newState[tweet.id] = tweet));
       return newState;
     }
-    case ADD_TWEET: {
-      const currId = 4
-      const tweet = action.tweet
-      const newState = {
-        id: currId,
-        ...tweet
-      };
-      console.log("STATE: ", state)
-      return {...state, 4 : newState};
-    }
+    case ADD_TWEET:
+      return { ...state, tweet: [state.tweets, action.tweet] };
     default:
       return state;
   }

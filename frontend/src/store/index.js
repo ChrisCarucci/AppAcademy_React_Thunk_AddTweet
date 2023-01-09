@@ -1,11 +1,11 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import tweetsReducer from './tweet';
+import tweet from './tweet';
 
 
 
 const rootReducer = combineReducers({
-  tweet: tweetsReducer
+  tweet
 });
 
 let enhancer;

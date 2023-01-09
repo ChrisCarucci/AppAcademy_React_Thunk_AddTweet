@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addNewTweet } from "./store/tweet";
+import { nanoid } from 'nanoid'
 
 const CreateTweet = () => {
   const [message, setMessage] = useState("");
+
 
   const dispatch = useDispatch();
 
@@ -16,9 +18,10 @@ const CreateTweet = () => {
     let cTime = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
     let dateTime = cDate + ' ' + cTime;
 
-    if (message) {
+    if (message.length > 4) {
       console.log(message)
       const newTweet = {
+        id: 6,
         message: message,
         createdAt: dateTime,
         updatedAt: dateTime
